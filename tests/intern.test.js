@@ -40,4 +40,16 @@ describe("Intern", () => {
     });
   });
 
+  describe("getSchool", () => {
+
+    it("should return School", () => {
+
+      const result = new Intern().getSchool();
+  
+        expect(result).toEqual(new Intern().school);
+
+    });
+
+  });
+
 });
