@@ -85,9 +85,87 @@ function addOnMoreMembers() {
 function createTeamPage(teamMembersArr) {
 
     //console.log("team members - "+JSON.stringify(teamMembersArr));
-    let newFileContents =  JSON.stringify(teamMembersArr);
 
-    fs.writeFile("./output/team.json", newFileContents, function(err) {
+    let newFileContents = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+        <title>Our Team</title>
+    
+        <style>
+            .header {
+                background-color: blue;
+                color:white;
+                display: block;
+                width: 100% !important;
+            }
+    
+            .card-title {
+                font-weight: bold;
+                font-size: 2em;
+            }
+    
+            .card-subtitle {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+    
+    <div class="header pt-5 pb-4 pl-3">
+        <h1 class="text-centered">Meet the Team</h1>
+    </div>
+    
+    <div class="container"><div class="row mt-5 m-0">`;
+
+    //looping through team
+    teamMembersArr.forEach(function(member) {
+
+        newFileContents += `<div class="col-sm-6 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">${member.name}</h5>`;
+
+        if(member.officeNumber != undefined) {
+
+            newFileContents += `<h6 class="card-subtitle mb-3">Manager</h5>
+            <p class="card-text"><strong>ID:</strong> ${member.id}<br/><strong>Email:</strong> ${member.email}<br/><strong>Office Number:</strong> ${member.officeNumber}</p>
+                </div>
+                </div>
+            </div>`;
+
+        }else if(member.github != undefined) {
+
+            newFileContents += `<h6 class="card-subtitle mb-3">Engineer</h5>
+            <p class="card-text"><strong>ID:</strong> ${member.id}<br/><strong>Email:</strong> ${member.email}<br/><strong>GitHub:</strong> ${member.github}</p>
+                </div>
+                </div>
+            </div>`;
+
+        } else if(member.school != undefined) {
+
+            newFileContents += `<h6 class="card-subtitle mb-3">Intern</h5>
+            <p class="card-text"><strong>ID:</strong> ${member.id}<br/><strong>Email:</strong> ${member.email}<br/><strong>School:</strong> ${member.school}</p>
+                </div>
+                </div>
+            </div>`;
+
+        }
+
+    });
+
+    //adding on end of file
+    newFileContents += `</div>
+    
+    </div>
+    
+    </body>
+    </html>`;
+
+    fs.writeFile("./output/team.html", newFileContents, function(err) {
 
         if (err) {
         return console.log(err);
